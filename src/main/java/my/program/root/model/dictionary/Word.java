@@ -68,14 +68,13 @@ public class Word {
 		}
 	}
 	
-	@SuppressWarnings("null")
+
 	public boolean containsCath(String cathName) {
 		if(cathName != null) {
-			return false;
-		}
-		for(Cathegory element: cath) {
-			if(cathName.equals(element.getValue())) {
-				return true;
+			for(Cathegory element: cath) {
+				if(cathName.equals(element.getValue())) {
+					return true;
+				}
 			}
 		}
 		return false;

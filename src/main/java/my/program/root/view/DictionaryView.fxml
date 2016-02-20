@@ -21,7 +21,7 @@
                               <Insets left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
                         </ComboBox>
-                        <TextField onKeyPressed="#findHandler" promptText="Enter word">
+                        <TextField fx:id="textField" onKeyPressed="#findHandler" promptText="Enter word">
                            <font>
                               <Font size="14.0" />
                            </font>

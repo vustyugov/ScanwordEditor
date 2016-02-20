@@ -1,19 +1,13 @@
 package my.program.root.controller;
 
 import java.util.List;
-import java.awt.KeyEventDispatcher;
 import java.util.LinkedList;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
+import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import my.program.root.ScanwordEditorApp;
+import javafx.scene.input.*;
 import my.program.root.model.dictionary.Dictionary;
+import my.program.root.model.scanword.Block;
 
 public class DictionaryViewController {
 	@FXML
@@ -40,10 +34,9 @@ public class DictionaryViewController {
 	@FXML
 	private Tab incorrectTab;
 	
-	private ScanwordEditorApp mainApp;
 	private List<String> cathegories;
 	private Dictionary dic;
-	private String input;
+	private Block block; 
 	
 	@FXML
 	private void initialize() {
@@ -51,46 +44,26 @@ public class DictionaryViewController {
 	
 	@FXML
 	private void findHandler() {
-		input = "";
-		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-		    @Override
-		    public void handle(KeyEvent key) {
-		        if (key.getCode() != KeyCode.ENTER) {
-
-		            if (key.getCode().isDigitKey() || key.getCode().isLetterKey()) {
-		                String newChar = key.getText();
-		                input = input.concat(newChar);
-		            }
-
-		        }
-		        else {
-		            System.out.println(input);
-		        }
-
-		    }
+		textField.setOnKeyPressed((KeyEvent event) -> {
+			switch(event.getCode()) {
+			case ENTER:
+				unusedListView.getItems().clear();
+				String pattern = textField.getText();
+				String cath = comboBox.getSelectionModel().getSelectedItem();
+				List<String> words = dic.findWordsByTemplateAndCathegory(pattern, cath);
+				unusedListView.getItems().addAll(FXCollections.observableList(words));
+			default:
+				break;
+			}
 		});
-		
-		
-//			switch (key.getCode()) {
-//				case ENTER:
-//					String word = textField.getText();
-//					System.out.println("Press Enter");
-//					String cathegory = comboBox.getSelectionModel().getSelectedItem();
-//					List<String> words = Dictionary.getInstance().findWordsByTemplateAndCathegory(word, cathegory);
-//					ObservableList<String> wordsToView = FXCollections.observableArrayList(words);
-//					unusedListView.getItems().addAll(wordsToView);
-//					break;
-//				case SHIFT:
-//					System.out.println("Press key shift");
-//				default:
-//					System.out.println("Press any key");
-//					break;
-//			}
 	}
 	
 	public void setDictionary(Dictionary dic) {
 		this.dic = dic;
+	}
+	
+	public void setScanword(Block block) {
+		this.block = block;
 	}
 	
 	public void setCathegories(List<String> caths) {
@@ -101,5 +74,4 @@ public class DictionaryViewController {
 		}
 		comboBox.getItems().addAll(cathegories);
 	}
-	
 }
