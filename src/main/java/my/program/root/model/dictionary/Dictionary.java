@@ -4,11 +4,7 @@ import java.util.*;
 import java.util.regex.*;
 
 public class Dictionary {
-	/**
-	 * map: first parameter describe length words contains in List<Word>,
-	 * 		second  - parameter contain Map<String, Integer>, 
-	 * 		where String is value word and Integer is count in List<Word>  
-	 */
+
 	private Map<Integer, Map<String, Integer>> map;
 	private List<Word> wordsList;
 	
@@ -54,6 +50,11 @@ public class Dictionary {
 		}
 	}
 	
+	/**
+	 * Return found word by value
+	 * @param wordValue 
+	 * @return Word class instance
+	 */
 	public Word getWord(String wordValue) {
 		if(map.get(wordValue.length()).containsKey(wordValue)) {
 			return wordsList.get(map.get(wordValue.length()).get(wordValue));
@@ -85,21 +86,8 @@ public class Dictionary {
 		return buf.toString();
 	}
 	
-	public List<String> findWordsByTemplate(String template) {
-		List<String> list = new LinkedList<String> ();
-		Map<String, Integer> innerMap = map.get(template.length());
-		Pattern pattern = Pattern.compile(convertTemplate(template));
-		for(String word: innerMap.keySet()) {
-			Matcher matcher = pattern.matcher(word);
-			if(matcher.matches()) {
-				list.add(word);
-			}
-		}
-		return list;
-	}
 	
-	
-	public List<String> findWordsByCathegory(String cathegoryName) {
+	private List<String> getWordsByCathegory(String cathegoryName) {
 		List<String> list = new LinkedList<String>();
 		for(Word word: wordsList) {
 			if(word.containsCath(cathegoryName)) {
@@ -107,5 +95,25 @@ public class Dictionary {
 			}
 		}
 		return list;
+	}
+	
+	/**
+	 * Return found words, which contains cathegory with value cathegoryName
+	 * and define by pattern template
+	 * @param template
+	 * @param cathegoryName
+	 * @return
+	 */
+	public List<String> findWordsByTemplateAndCathegory(String template, String cathegoryName) {
+		List<String> list = this.getWordsByCathegory(cathegoryName);
+		List<String> resultList = new LinkedList<String>();
+		Pattern pattern = Pattern.compile(convertTemplate(template));
+		for(String word: list) {
+			Matcher matcher = pattern.matcher(word);
+			if(matcher.matches()) {
+				resultList.add(word);
+			}
+		}
+		return resultList;
 	}
 }

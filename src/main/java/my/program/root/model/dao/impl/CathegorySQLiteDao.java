@@ -11,7 +11,7 @@ public class CathegorySQLiteDao implements CathegoryDao{
 	ResultSet rs;
 
 	@Override
-	public void connectToDataBase(Connection conn) {
+	public void getConnection(Connection conn) {
 		this.conn = conn;		
 	}
 
@@ -19,39 +19,33 @@ public class CathegorySQLiteDao implements CathegoryDao{
 	public void create(Cathegory cath) {
 				
 	}
+	
 
 	@Override
-	public Map<Cathegory, List<Integer>> readAll() {
-		Cathegory lastCath = null;
-		Cathegory newCath = null;
-		Integer index = null;
-		Map<Cathegory, List<Integer>> map = new HashMap<Cathegory, List<Integer>>();
-		List<Integer> list = new LinkedList<Integer> ();
+	public List<Cathegory> readAll() {
+		List<Cathegory> list = new LinkedList<Cathegory>();
 		Statement st = null;
 		try {
 			st = conn.createStatement();
 			rs = st.executeQuery(CathegoryDao.readAllCathegories);
-			index = new Integer(rs.getInt("word_id"));
-			lastCath = new Cathegory(rs.getInt("id"), rs.getString("value"), rs.getString("desc"));
-			list.add(index);
 			while (rs.next()) {
-				index = new Integer(rs.getInt("word_id"));
-				newCath = new Cathegory(rs.getInt("id"), rs.getString("value"), rs.getString("desc"));
-				if(newCath.equals(lastCath)) {
-					list.add(index);
-					map.put(newCath, list);
-				} 
-				else {
-					map.put(newCath, list);
-					list = new LinkedList<Integer>();
-					list.add(index);
-				}
+				list.add(new Cathegory(rs.getInt("id") ,rs.getString("value"), rs.getString("description")));
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if (st != null) {
+					st.close();
+				}
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		return map;
+		return list;
 	}
 	
 	@Override
@@ -100,16 +94,5 @@ public class CathegorySQLiteDao implements CathegoryDao{
 	public void delete(Cathegory cath) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void disconnectFromDataBase() {
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 }

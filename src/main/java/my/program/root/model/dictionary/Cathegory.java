@@ -42,7 +42,7 @@ public class Cathegory {
 			return false;
 		}
 		if(obj instanceof Cathegory) {
-			if(((Cathegory)obj).id == this.id & ((Cathegory)obj).value == this.value) {
+			if(this.id == ((Cathegory)obj).id  & this.value.equals(((Cathegory)obj).value)) {
 				return true;
 			} else {
 				return false;

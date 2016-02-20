@@ -12,7 +12,7 @@ public class WordSQLiteDao implements WordDao{
 	private ResultSet rs;
 	
 	@Override
-	public void connectToDataBase (Connection conn) {
+	public void getConnection (Connection conn) {
 		this.conn = conn; 
 	}
 
@@ -42,6 +42,12 @@ public class WordSQLiteDao implements WordDao{
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -73,6 +79,14 @@ public class WordSQLiteDao implements WordDao{
 		} 
 		catch (Exception e) {
             e.printStackTrace();
+        } finally {
+        	try {
+				rs.close();
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+        	
         }
 		return word;
 	}
@@ -110,6 +124,13 @@ public class WordSQLiteDao implements WordDao{
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				st.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return list;
@@ -130,19 +151,7 @@ public class WordSQLiteDao implements WordDao{
 			ps.setInt(1, word.getId());
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void disconnectFromDataBase() {
-		if (conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		if (ps != null) {
+		} finally {
 			try {
 				ps.close();
 			} catch (SQLException e) {
