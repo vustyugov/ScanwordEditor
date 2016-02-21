@@ -13,11 +13,11 @@ public class Cell {
 		arrow = false;
 	}
 	
-	public void setString(String string) {
+	public void setText(String string) {
 		this.string = string;
 	}
 	
-	public String getString() {
+	public String getText() {
 		return string;
 	}
 	
@@ -25,7 +25,7 @@ public class Cell {
 		this.editable = editable;
 	}
 	
-	public boolean getEditable() {
+	public boolean isEditable() {
 		return editable;
 	}
 	
@@ -33,7 +33,7 @@ public class Cell {
 		this.comment = comment;
 	}
 	
-	public boolean getComment() {
+	public boolean isComment() {
 		return comment;
 	}
 	
@@ -41,7 +41,7 @@ public class Cell {
 		this.arrow = arrow;
 	}
 
-	public boolean getArrow() {
+	public boolean isArrow() {
 		return arrow;
 	}
 }
