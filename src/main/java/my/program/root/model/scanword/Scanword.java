@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 public interface Scanword extends Serializable{
-	public int getId();
 	public String getName ();
 	public int getRowCount();
 	public int getColumnCount();

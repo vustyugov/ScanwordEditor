@@ -1,22 +1,19 @@
 package my.program.root.model.scanword;
 
 import java.util.*;
-import java.util.regex.Pattern;
 
 public class Block {
-	
 	private String name;
 	private Date creationTime;
 	private Date endTime;
-	private List<Scanword> scanwords;
-	private Map<String, List<String>> wordsList;
+	private Map<String, Scanword> scanwords;
 	
 	public Block(String name, Date creationTime, BlockType type) {
 		this.name = name;
 		this.creationTime = creationTime;
 		switch(type) {
 		case fiftyShortMozaic:
-			scanwords = new ArrayList<Scanword> (50);
+			scanwords = new HashMap<String, Scanword>();
 			break;
 		default :
 			break;
@@ -48,14 +45,19 @@ public class Block {
 	}
 	
 	public List<Scanword> getScanword() {
-		return scanwords;
+		return new LinkedList<Scanword>(scanwords.values());
 	}
 	
-	public Scanword getScanword(int index) {
-		return scanwords.get(index);
+	public Scanword getScanword(String scanwordName) {
+		return scanwords.get(scanwordName);
 	}
 
-	public List<String> getWordsList(String scanwordName) {
-		return wordsList.get(scanwordName);
+	public List<String> getWordsList() {
+		List<String> list = new LinkedList<String>();
+		for(Scanword scanword: scanwords.values()) {
+			list.addAll(scanword.getWords());
+		}
+		Collections.sort(list);
+		return list;
 	}
 }

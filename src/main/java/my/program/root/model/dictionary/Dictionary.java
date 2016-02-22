@@ -7,6 +7,7 @@ public class Dictionary {
 
 	private Map<Integer, Map<String, Integer>> map;
 	private List<Word> wordsList;
+	private List<Cathegory> cathList;
 	
 	private static volatile Dictionary instance;
 	
@@ -15,6 +16,8 @@ public class Dictionary {
 		for(int index = 2; index < 25; index++) {
 			map.put(index, new HashMap<String, Integer>());
 		}
+		cathList = new ArrayList<Cathegory>(0);
+		wordsList = new ArrayList<Word>(0);
 	}
 	
 	public static Dictionary getInstance() {
@@ -31,13 +34,23 @@ public class Dictionary {
 	}
 		
 	public void addAllWords(List<Word> words) {
-		wordsList = new ArrayList<Word> (words.size());
-		wordsList.addAll(words);
+		List<Word> tmp = null;
+		if(wordsList.size() == 0) {
+			tmp = new ArrayList<Word> (words.size());
+			tmp.addAll(words);
+		} else {
+			tmp = new ArrayList<Word> (wordsList.size() + words.size());
+			tmp.addAll(wordsList);
+			tmp.addAll(words);
+		}
+		wordsList = tmp;
 		for(int index = 0; index < wordsList.size(); index ++) {
 			Word word = wordsList.get(index);
-			Map<String,Integer> innerMap = map.get(word.getValue().length());
-			innerMap.put(word.getValue(), index);
-			map.put(word.getValue().length(), innerMap);
+			if(!map.containsKey(word.getValue())) {
+				Map<String, Integer> iMap = map.get(word.getValue().length());
+				iMap.put(word.getValue(), index);
+				map.put(word.getValue().length(), iMap);
+			}
 		}
 	}
 	
@@ -46,10 +59,25 @@ public class Dictionary {
 		tmp.addAll(wordsList);
 		if(!containsWord(word.getValue())) {
 			tmp.add(word);
+			Map<String, Integer> iMap = map.get(word.getValue().length());
+			iMap.put(word.getValue(), tmp.size()-1);
+			map.put(word.getValue().length(), iMap);
 			wordsList = tmp;
 		}
+		
 	}
 	
+	public void addAllCathegories(List<Cathegory> caths) {
+		cathList = caths;
+	}
+	
+	public List<String> getCathegories() {
+		List<String> list = new ArrayList<String>(cathList.size());
+		for(int index = 0; index < list.size(); index++) {
+			list.set(index, cathList.get(index).getValue());
+		}
+		return list;
+	}
 	/**
 	 * Return found word by value
 	 * @param wordValue 

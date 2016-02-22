@@ -12,11 +12,6 @@ public final class ShortMozaicScanword extends SquaredScanword{
 	}
 
 	@Override
-	public int getId() {
-		return -1;
-	}
-
-	@Override
 	public void setArray(Cell[][] array) {
 		super.array = array;		
 	}
@@ -29,50 +24,6 @@ public final class ShortMozaicScanword extends SquaredScanword{
 	@Override
 	public Cell getArrayElement(int columnIndex, int rowIndex) {
 		return array[rowIndex][columnIndex];
-	}
-
-	@Override
-	public List<String> getWords() {
-		List<String> list = new LinkedList<String>();
-		StringBuilder line = new StringBuilder();
-		for(int rIndex = 0; rIndex < rowCount; rIndex++) {
-			for(int cIndex = 0; cIndex < columnCount; cIndex++) {
-				Cell cell = array[rIndex][cIndex];
-				if(cell.isEditable()) {
-					if(cell.isComment()) {
-						line.append(" ");
-					} else {
-						line.append(cell.getText());
-					}
-				}
-			}
-		}
-		list.addAll(parseLine(line.toString()));
-		for(int rIndex = 0; rIndex < rowCount; rIndex++) {
-			for(int cIndex = 0; cIndex < columnCount; cIndex++) {
-				Cell cell = array[cIndex][rIndex];
-				if(cell.isEditable()) {
-					if(cell.isComment()) {
-						line.append(" ");
-					} else {
-						line.append(cell.getText());
-					}
-				}
-			}
-		}
-		list.addAll(parseLine(line.toString()));
-		return list;
-	}
-	
-	private List<String> parseLine(String line) {
-		List<String> wordList = new LinkedList<String>();
-		@SuppressWarnings("resource")
-		Scanner scanner = new Scanner(line);
-		scanner.useDelimiter("1");
-		while (scanner.hasNext()) {
-			wordList.add(scanner.next());
-		}
-		return wordList;
 	}
 
 	@Override

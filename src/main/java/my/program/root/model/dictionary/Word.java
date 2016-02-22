@@ -68,7 +68,6 @@ public class Word {
 		}
 	}
 	
-
 	public boolean containsCath(String cathName) {
 		if(cathName != null) {
 			for(Cathegory element: cath) {
@@ -86,5 +85,18 @@ public class Word {
 	
 	public void addCath(List<Cathegory> cath) {
 		this.cath = cath;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Word) {
+			if (this.value.equals(((Word) obj).value)) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 }

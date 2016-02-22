@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import my.program.root.ScanwordEditorApp;
+import my.program.root.model.ScanwordEditorApp;
 import my.program.root.model.dictionary.Dictionary;
 import my.program.root.model.scanword.Block;
 
@@ -70,7 +70,7 @@ public class DictionaryViewController {
 		fChooser.getExtensionFilters().addAll(new ExtensionFilter("Excel files","*.xlsx"));
 		File selectedFile = fChooser.showOpenDialog(null);
 		if(selectedFile != null) {
-			app.loadFileWithScanwords(selectedFile);
+			
 		}
 		else {
 			
