@@ -3,6 +3,8 @@ package my.program.root.model.scanword;
 import java.util.Date;
 
 public abstract class SquaredScanword implements Scanword{
+
+	private static final long serialVersionUID = -6674690312789957146L;
 	protected String name;
 	protected int columnCount;
 	protected int rowCount;

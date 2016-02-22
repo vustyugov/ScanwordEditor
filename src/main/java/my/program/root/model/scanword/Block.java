@@ -1,14 +1,15 @@
 package my.program.root.model.scanword;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Block {
 	
-	private Integer id;
 	private String name;
 	private Date creationTime;
 	private Date endTime;
 	private List<Scanword> scanwords;
+	private Map<String, List<String>> wordsList;
 	
 	public Block(String name, Date creationTime, BlockType type) {
 		this.name = name;
@@ -20,10 +21,6 @@ public class Block {
 		default :
 			break;
 		}
-	}
-	
-	public Integer getId() {
-		return id;
 	}
 	
 	public String getName() {
@@ -56,5 +53,9 @@ public class Block {
 	
 	public Scanword getScanword(int index) {
 		return scanwords.get(index);
+	}
+
+	public List<String> getWordsList(String scanwordName) {
+		return wordsList.get(scanwordName);
 	}
 }

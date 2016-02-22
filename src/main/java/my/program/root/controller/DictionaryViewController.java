@@ -1,11 +1,15 @@
 package my.program.root.controller;
 
 import java.util.List;
+import java.io.File;
 import java.util.LinkedList;
 import javafx.collections.*;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import my.program.root.ScanwordEditorApp;
 import my.program.root.model.dictionary.Dictionary;
 import my.program.root.model.scanword.Block;
 
@@ -36,7 +40,8 @@ public class DictionaryViewController {
 	
 	private List<String> cathegories;
 	private Dictionary dic;
-	private Block block; 
+	private Block block;
+	private ScanwordEditorApp app;
 	
 	@FXML
 	private void initialize() {
@@ -58,12 +63,30 @@ public class DictionaryViewController {
 		});
 	}
 	
+	@FXML
+	private void loadHandle() {
+		FileChooser fChooser = new FileChooser();
+		fChooser.setTitle("Select files");
+		fChooser.getExtensionFilters().addAll(new ExtensionFilter("Excel files","*.xlsx"));
+		File selectedFile = fChooser.showOpenDialog(null);
+		if(selectedFile != null) {
+			app.loadFileWithScanwords(selectedFile);
+		}
+		else {
+			
+		}
+	}
+	
 	public void setDictionary(Dictionary dic) {
 		this.dic = dic;
 	}
 	
 	public void setScanword(Block block) {
 		this.block = block;
+	}
+	
+	public void setMainApp(ScanwordEditorApp app) {
+		this.app = app;
 	}
 	
 	public void setCathegories(List<String> caths) {

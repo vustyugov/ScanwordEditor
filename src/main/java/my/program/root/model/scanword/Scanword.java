@@ -1,8 +1,9 @@
 package my.program.root.model.scanword;
 
+import java.io.*;
 import java.util.*;
 
-public interface Scanword {
+public interface Scanword extends Serializable{
 	public int getId();
 	public String getName ();
 	public int getRowCount();

@@ -85,8 +85,7 @@ public class Dictionary {
 		}
 		return buf.toString();
 	}
-	
-	
+		
 	private List<String> getWordsByCathegory(String cathegoryName) {
 		List<String> list = new LinkedList<String>();
 		for(Word word: wordsList) {

@@ -16,11 +16,19 @@
                <children>
                   <VBox prefHeight="136.0" prefWidth="298.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="179.0" promptText="" visibleRowCount="5">
+                        <HBox spacing="10.0">
+                           <children>
+                              <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="126.0" promptText="" visibleRowCount="5">
+                                 <VBox.margin>
+                                    <Insets left="10.0" right="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadHandle" text="Load" />
+                           </children>
                            <VBox.margin>
-                              <Insets left="10.0" right="10.0" top="10.0" />
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </VBox.margin>
-                        </ComboBox>
+                        </HBox>
                         <TextField fx:id="textField" onKeyPressed="#findHandler" promptText="Enter word">
                            <font>
                               <Font size="14.0" />
