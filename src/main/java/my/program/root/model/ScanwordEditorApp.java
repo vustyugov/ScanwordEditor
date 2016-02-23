@@ -13,8 +13,9 @@ import my.program.root.model.dao.impl.DaoFactory;
 import my.program.root.model.dictionary.*;
 import my.program.root.model.scanword.Block;
 import my.program.root.model.scanword.Scanword;
+import my.program.root.model.util.ScanwordUtil;
 
-public class ScanwordEditorModel extends Application {
+public class ScanwordEditorApp extends Application {
 	private Stage primaryStage;
 	private AnchorPane rootLayout;
 	
@@ -35,7 +36,7 @@ public class ScanwordEditorModel extends Application {
 	public void showDictionaryView() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(ScanwordEditorModel.class.getResource("view/DictionaryView.fxml"));
+			loader.setLocation(ScanwordEditorApp.class.getResource("view/DictionaryView.fxml"));
 			rootLayout = (AnchorPane) loader.load();
 			
 			Scene scene = new Scene(rootLayout);
@@ -55,5 +56,10 @@ public class ScanwordEditorModel extends Application {
 	
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
+	}
+	
+	public static void main(String args) {
+		ScanwordUtil.loadDictionaryFromDB(StorageType.SQLite, Dictionary.getInstance());
+		launch(args);
 	}
 }

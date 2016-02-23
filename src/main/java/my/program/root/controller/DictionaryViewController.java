@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import my.program.root.model.ScanwordEditorModel;
+import my.program.root.model.ScanwordEditorApp;
 import my.program.root.model.dictionary.Dictionary;
 import my.program.root.model.scanword.Block;
 
@@ -41,7 +41,7 @@ public class DictionaryViewController {
 	private List<String> cathegories;
 	private Dictionary dic;
 	private Block block;
-	private ScanwordEditorModel app;
+	private ScanwordEditorApp app;
 	
 	@FXML
 	private void initialize() {
@@ -91,7 +91,7 @@ public class DictionaryViewController {
 		this.block = block;
 	}
 	
-	public void setMainApp(ScanwordEditorModel app) {
+	public void setMainApp(ScanwordEditorApp app) {
 		this.app = app;
 	}
 }
