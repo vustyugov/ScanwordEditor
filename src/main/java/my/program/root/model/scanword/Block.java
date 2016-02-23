@@ -8,16 +8,10 @@ public class Block {
 	private Date endTime;
 	private Map<String, Scanword> scanwords;
 	
-	public Block(String name, Date creationTime, BlockType type) {
+	public Block(String name, Date creationTime) {
 		this.name = name;
 		this.creationTime = creationTime;
-		switch(type) {
-		case fiftyShortMozaic:
-			scanwords = new HashMap<String, Scanword>();
-			break;
-		default :
-			break;
-		}
+		scanwords = new HashMap<String, Scanword>();
 	}
 	
 	public String getName() {
