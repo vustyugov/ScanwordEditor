@@ -8,16 +8,16 @@ public abstract class SquaredScanword implements Scanword{
 	protected String name;
 	protected int columnCount;
 	protected int rowCount;
-	protected Date creationTime;
-	protected Date endTime;
+	protected String creationTime;
+	protected String endTime;
 	protected Cell[][] array;
 	
-	public SquaredScanword(String name, Date date) {
+	public SquaredScanword(String name, String date) {
 		this.name = name;
 		this.creationTime = date;
 	}
 	
-	public SquaredScanword(String name, Cell[][] array, Date date) {
+	public SquaredScanword(String name, Cell[][] array, String date) {
 		this.name = name;
 		this.creationTime = date;
 		this.array = array;
@@ -29,16 +29,16 @@ public abstract class SquaredScanword implements Scanword{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getCreationTime() {
+	public String getCreationTime() {
 		return creationTime;
 	}
-	public void setCreationTime(Date creationTime) {
+	public void setCreationTime(String creationTime) {
 		this.creationTime = creationTime;
 	}
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 	public Cell[][] getArray() {

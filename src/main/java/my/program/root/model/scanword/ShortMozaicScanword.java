@@ -1,13 +1,11 @@
 package my.program.root.model.scanword;
 
-import java.util.*;
-
 public final class ShortMozaicScanword extends SquaredScanword{
 
 	private static final long serialVersionUID = -6627901701722127760L;
 
-	public ShortMozaicScanword(String name, Date date) {
-		super(name, date);
+	public ShortMozaicScanword(String name, String string) {
+		super(name, string);
 		createTemplate();
 	}
 

@@ -1,7 +1,8 @@
 package my.program.root.model.dictionary;
 
 import java.util.*;
-import java.util.regex.*;
+
+import my.program.root.model.util.ScanwordUtil;
 
 public class Dictionary {
 
@@ -100,20 +101,6 @@ public class Dictionary {
 		map.get(wordValue.length()).remove(wordValue);
 	}
 	
-	private String convertTemplate(String template) {
-		String word = template.toUpperCase().trim();
-		StringBuilder buf = new StringBuilder();
-		for(int index = 0; index < word.length(); index++) {
-			if(template.charAt(index) == '?') {
-				buf.append('.');
-			} 
-			else {
-				buf.append(word.charAt(index));
-			}
-		}
-		return buf.toString();
-	}
-		
 	private List<String> getWordsByCathegory(String cathegoryName) {
 		List<String> list = new LinkedList<String>();
 		for(Word word: wordsList) {
@@ -132,15 +119,6 @@ public class Dictionary {
 	 * @return
 	 */
 	public List<String> findWordsByTemplateAndCathegory(String template, String cathegoryName) {
-		List<String> list = this.getWordsByCathegory(cathegoryName);
-		List<String> resultList = new LinkedList<String>();
-		Pattern pattern = Pattern.compile(convertTemplate(template));
-		for(String word: list) {
-			Matcher matcher = pattern.matcher(word);
-			if(matcher.matches()) {
-				resultList.add(word);
-			}
-		}
-		return resultList;
+		return ScanwordUtil.findWordsByTemplate(getWordsByCathegory(cathegoryName), template);
 	}
 }

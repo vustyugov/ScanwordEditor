@@ -55,8 +55,8 @@ public class DictionaryViewController {
 				unusedListView.getItems().clear();
 				String pattern = textField.getText();
 				String cath = comboBox.getSelectionModel().getSelectedItem();
-				List<String> words = dic.findWordsByTemplateAndCathegory(pattern, cath);
-				unusedListView.getItems().addAll(FXCollections.observableList(words));
+				unusedListView.getItems().addAll(FXCollections.observableList(dic.findWordsByTemplateAndCathegory(pattern, cath)));
+				usedListView.getItems().addAll(FXCollections.observableArrayList(block.findWordsByTemplate(pattern)));
 			default:
 				break;
 			}
@@ -70,7 +70,7 @@ public class DictionaryViewController {
 		fChooser.getExtensionFilters().addAll(new ExtensionFilter("Excel files","*.xlsx"));
 		File selectedFile = fChooser.showOpenDialog(null);
 		if(selectedFile != null) {
-			
+			app.loadScanwordsFile(block, selectedFile);
 		}
 		else {
 			

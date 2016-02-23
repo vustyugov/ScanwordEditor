@@ -17,6 +17,10 @@ public final class DaoFactory {
 		return new CathegorySQLiteDao();
 	}
 	
+	public static ScanwordDao getScanwordDao() {
+		return new ScanwordExcelFileDao();
+	}
+	
 	public static Connection createConnectionToSQLiteDB() {
 		Connection conn = null;
 		try {

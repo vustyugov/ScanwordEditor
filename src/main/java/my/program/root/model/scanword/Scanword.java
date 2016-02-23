@@ -7,10 +7,10 @@ public interface Scanword extends Serializable{
 	public String getName ();
 	public int getRowCount();
 	public int getColumnCount();
-	public void setCreationTime(Date cTime);
-	public Date getCreationTime();
-	public void setEndTime(Date eTime);
-	public Date getEndTime();
+	public void setCreationTime(String cTime);
+	public String getCreationTime();
+	public void setEndTime(String eTime);
+	public String getEndTime();
 	public void setArray(Cell[][] array);
 	public Cell[][] getArray();
 	public void setArrayElement(int columnIndex, int rowIndex, Cell value);

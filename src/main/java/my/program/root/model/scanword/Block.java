@@ -2,16 +2,24 @@ package my.program.root.model.scanword;
 
 import java.util.*;
 
+import my.program.root.model.util.ScanwordUtil;
+
 public class Block {
 	private String name;
-	private Date creationTime;
-	private Date endTime;
+	private String creationTime;
+	private String endTime;
 	private Map<String, Scanword> scanwords;
 	
-	public Block(String name, Date creationTime) {
+	public Block(String name, String creationTime) {
 		this.name = name;
 		this.creationTime = creationTime;
 		scanwords = new HashMap<String, Scanword>();
+	}
+	
+	public void setScanwords(List<Scanword> scanwords) {
+		for(Scanword scanword: scanwords) {
+			this.scanwords.put(scanword.getName(), scanword);
+		}
 	}
 	
 	public String getName() {
@@ -22,19 +30,19 @@ public class Block {
 		this.name = name;
 	}
 	
-	public Date getCreationTime() {
+	public String getCreationTime() {
 		return creationTime;
 	}
 	
-	public void setCreationTime(Date creationTime) {
+	public void setCreationTime(String creationTime) {
 		this.creationTime = creationTime;
 	}
 	
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 	
-	public void setEndTime(Date endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 	
@@ -53,5 +61,9 @@ public class Block {
 		}
 		Collections.sort(list);
 		return list;
+	}
+	
+	public List<String> findWordsByTemplate(String template) {
+		return ScanwordUtil.findWordsByTemplate(getWordsList(), template);
 	}
 }
