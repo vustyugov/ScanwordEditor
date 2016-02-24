@@ -1,24 +1,37 @@
 package my.program.root.model.util;
 
 import java.sql.Connection;
-import java.util.*;
+import java.util.List;
+import java.util.LinkedList;
 import java.util.regex.*;
 
 import my.program.root.model.StorageType;
-import my.program.root.model.dao.api.CathegoryDao;
-import my.program.root.model.dao.api.WordDao;
+import my.program.root.model.dao.api.*;
 import my.program.root.model.dao.impl.DaoFactory;
 import my.program.root.model.dictionary.Dictionary;
+import my.program.root.model.dictionary.Word;
 
 public final class ScanwordUtil {
 		
-	public static List<String> findWordsByTemplate (List<String> list, String template) {
+	public static List<String> findWordsByTemplateAndCathegory (Dictionary dic, List<String> list, String template, String cathegoryName) {
+		List<String> wordsFromDictionary = null;
+		if(cathegoryName.equals("все")) {
+			wordsFromDictionary = dic.getWordsValue();
+		}
+		else {
+			wordsFromDictionary = dic.getWordsByCathegory(cathegoryName);
+		}
+		
 		List<String> resultList = new LinkedList<String>();
 		Pattern pattern = Pattern.compile(convertTemplate(template));
 		for(String word: list) {
 			Matcher matcher = pattern.matcher(word);
 			if(matcher.matches()) {
-				resultList.add(word);
+				if(wordsFromDictionary != null) {
+					if(wordsFromDictionary.contains(word)){
+						resultList.add(word);
+					}
+				}
 			}
 		}
 		return resultList;
@@ -48,6 +61,9 @@ public final class ScanwordUtil {
 				wordDao.getConnection(conn);
 				dic.addAllCathegories(cathDao.readAll());
 				dic.addAllWords(wordDao.readAll());
+				for(Word word: dic.getWords()) {
+					word.addCath(cathDao.readByWordValue(word.getValue()));
+				}
 				
 				DaoFactory.closeConnectionWithSQLiteDB(conn);
 				break;

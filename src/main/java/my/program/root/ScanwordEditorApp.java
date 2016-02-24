@@ -1,4 +1,4 @@
-package my.program.root.model;
+package my.program.root;
 
 import java.io.*;
 import java.util.List;
@@ -9,10 +9,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import my.program.root.controller.DictionaryViewController;
+import my.program.root.model.StorageType;
+import my.program.root.model.dao.api.ScanwordDao;
 import my.program.root.model.dao.impl.DaoFactory;
 import my.program.root.model.dictionary.*;
-import my.program.root.model.scanword.Block;
-import my.program.root.model.scanword.Scanword;
+import my.program.root.model.scanword.*;
 import my.program.root.model.util.ScanwordUtil;
 
 public class ScanwordEditorApp extends Application {
@@ -23,14 +24,16 @@ public class ScanwordEditorApp extends Application {
 	public void start(Stage primaryPane) throws Exception {
 		this.primaryStage = primaryPane;
 		this.primaryStage.setTitle("ScanwordEditor");
-		
+		ScanwordUtil.loadDictionaryFromDB(StorageType.SQLite, Dictionary.getInstance());
 		showDictionaryView();
 	}
 		
 	public void loadScanwordsFile(Block block, File file){
-		DaoFactory.getScanwordDao().getConnetction(file.getAbsolutePath());
-		List<Scanword> list = DaoFactory.getScanwordDao().readAll();
-		block.setScanwords(list);
+		ScanwordDao scanDao = DaoFactory.getScanwordDao();
+		scanDao.getConnetction(file.getAbsolutePath());
+		block.setFreeForReading(false);
+		block.setScanwords(scanDao.readAll());
+		block.setFreeForReading(true);
 	}
 
 	public void showDictionaryView() {
@@ -45,10 +48,9 @@ public class ScanwordEditorApp extends Application {
 			
 			DictionaryViewController controller = loader.getController();
 			controller.setMainApp(this);
-			Block block = new Block("test", "23/2/2016 4:08:50");
-			controller.setScanword(block);
 			controller.setDictionary(Dictionary.getInstance());
-			
+			Block block = new Block("test", "23/2/2016 4:08:50");
+			controller.setScanword(block);			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,7 +61,6 @@ public class ScanwordEditorApp extends Application {
 	}
 	
 	public static void main(String args) {
-		ScanwordUtil.loadDictionaryFromDB(StorageType.SQLite, Dictionary.getInstance());
 		launch(args);
 	}
 }

@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import my.program.root.model.ScanwordEditorApp;
+import my.program.root.ScanwordEditorApp;
 import my.program.root.model.dictionary.Dictionary;
 import my.program.root.model.scanword.Block;
 
@@ -28,16 +28,7 @@ public class DictionaryViewController {
 	
 	@FXML
 	private ListView<String> incorrectListView;
-	
-	@FXML
-	private Tab unusedTab;
-	
-	@FXML
-	private Tab usedTab;
-	
-	@FXML
-	private Tab incorrectTab;
-	
+		
 	private List<String> cathegories;
 	private Dictionary dic;
 	private Block block;
@@ -53,10 +44,27 @@ public class DictionaryViewController {
 			switch(event.getCode()) {
 			case ENTER:
 				unusedListView.getItems().clear();
+				usedListView.getItems().clear();
+				incorrectListView.getItems().clear();
 				String pattern = textField.getText();
 				String cath = comboBox.getSelectionModel().getSelectedItem();
-				unusedListView.getItems().addAll(FXCollections.observableList(dic.findWordsByTemplateAndCathegory(pattern, cath)));
-				usedListView.getItems().addAll(FXCollections.observableArrayList(block.findWordsByTemplate(pattern)));
+				List<String> incorrectList = dic.findWordsByTemplateAndCathegory(
+															pattern, "запрещенные");
+				List<String> usedList = block.findWordsByTemplateAndCathegory(
+						Dictionary.getInstance(), pattern, cath);
+				List<String> unusedList = dic.findWordsByTemplateAndCathegory(pattern, cath);
+				
+				unusedList.removeAll(incorrectList);
+				unusedList.removeAll(usedList);
+
+				unusedListView.getItems().addAll(
+						FXCollections.observableList(unusedList));
+
+				usedListView.getItems().addAll(
+						FXCollections.observableList(usedList));
+				
+				incorrectListView.getItems().addAll(
+						FXCollections.observableList(incorrectList));
 			default:
 				break;
 			}
@@ -70,7 +78,11 @@ public class DictionaryViewController {
 		fChooser.getExtensionFilters().addAll(new ExtensionFilter("Excel files","*.xlsx"));
 		File selectedFile = fChooser.showOpenDialog(null);
 		if(selectedFile != null) {
+			textField.setEditable(false);
+			comboBox.setDisable(true);
 			app.loadScanwordsFile(block, selectedFile);
+			textField.setEditable(true);
+			comboBox.setDisable(false);
 		}
 		else {
 			
@@ -81,9 +93,7 @@ public class DictionaryViewController {
 		this.dic = dic;
 		cathegories = new LinkedList<String>();
 		cathegories.add("все");
-		if(dic.getCathegories() != null) {
-			cathegories.addAll(dic.getCathegories());
-		}
+		cathegories.addAll(dic.getCathegories());
 		comboBox.getItems().addAll(cathegories);
 	}
 	

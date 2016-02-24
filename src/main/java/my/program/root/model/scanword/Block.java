@@ -1,13 +1,19 @@
 package my.program.root.model.scanword;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.Collections;
 
+import my.program.root.model.dictionary.Dictionary;
 import my.program.root.model.util.ScanwordUtil;
 
 public class Block {
 	private String name;
 	private String creationTime;
 	private String endTime;
+	private boolean freeForReading = true;
 	private Map<String, Scanword> scanwords;
 	
 	public Block(String name, String creationTime) {
@@ -20,6 +26,14 @@ public class Block {
 		for(Scanword scanword: scanwords) {
 			this.scanwords.put(scanword.getName(), scanword);
 		}
+	}
+	
+	public void setFreeForReading(boolean writing) {
+		this.freeForReading = writing;
+	}
+	
+	public boolean isFreeForReading() {
+		return freeForReading;
 	}
 	
 	public String getName() {
@@ -63,7 +77,7 @@ public class Block {
 		return list;
 	}
 	
-	public List<String> findWordsByTemplate(String template) {
-		return ScanwordUtil.findWordsByTemplate(getWordsList(), template);
+	public List<String> findWordsByTemplateAndCathegory(Dictionary dic, String template, String cathegoryName) {
+		return ScanwordUtil.findWordsByTemplateAndCathegory(dic, getWordsList(), template, cathegoryName);
 	}
 }

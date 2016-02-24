@@ -49,11 +49,13 @@ public class CathegorySQLiteDao implements CathegoryDao{
 	}
 	
 	@Override
-	public List<Cathegory> readByWordId(int id) {
+	public List<Cathegory> readByWordValue(String value) {
 		Cathegory cath = null;
 		List<Cathegory> list = new LinkedList<Cathegory> ();
 		StringBuilder buf = new StringBuilder(CathegoryDao.readByWordId);
-		buf.append(id);
+		buf.append("\"");
+		buf.append(value);
+		buf.append("\"");
 		buf.append(";");
 		Statement st = null;
 		try {

@@ -25,7 +25,7 @@ public final class DaoFactory {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:sedb.s3db");
+			conn = DriverManager.getConnection("jdbc:sqlite:d:\\workspace\\develope\\DataBases\\SQLite\\test.s3db");
 			System.out.println("База подключена.");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

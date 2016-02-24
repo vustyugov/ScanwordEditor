@@ -43,37 +43,37 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab fx:id="unusedTab" text="Unused">
-                           <content>
-                              <AnchorPane minHeight="478.0" minWidth="200.0">
+                  <Accordion>
+                    <panes>
+                      <TitledPane animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" prefWidth="202.0" text="unused">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <ListView fx:id="unusedListView" prefHeight="478.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
-                           </content>
-                        </Tab>
-                      <Tab fx:id="usedTab" text="Used">
-                           <content>
-                              <AnchorPane minHeight="478.0" minWidth="200.0">
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" text="used">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <ListView fx:id="usedListView" prefHeight="478.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
-                           </content>
-                        </Tab>
-                        <Tab fx:id="incorrectTab" text="Incorrect">
-                           <content>
-                              <AnchorPane minHeight="478.0" minWidth="200.0">
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" text="incorrect">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <ListView fx:id="incorrectListView" prefHeight="478.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
-                           </content>
-                        </Tab>
-                    </tabs>
-                  </TabPane>
+                        </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
                </children>
             </AnchorPane>
         </items>

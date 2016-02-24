@@ -58,6 +58,9 @@ public class ScanwordExcelFileDao implements ScanwordDao{
 	public void getConnetction(Object conn) {
 		if(conn instanceof String) {
 			path = (String)conn;
+		} 
+		else if (conn instanceof File) {
+			path = ((File)conn).getAbsolutePath(); 
 		}
 	}
 
@@ -67,54 +70,39 @@ public class ScanwordExcelFileDao implements ScanwordDao{
 	}
 
 	private Dimention getDimention(XSSFSheet sheet) {
-		int rLength = 0;
-		int cLength = 0;
 		Dimention dim = new Dimention();
-		boolean lable = false;
-		
 		XSSFRow row = null;
 		XSSFCell cell = null;
-		for(int rIndex = 0; rIndex < 10; rIndex++) {
+		int[] index = {0,0,0,0};
+		for(int rIndex = 0; rIndex < 50; rIndex++) {
 			row = sheet.getRow(rIndex);
-			for(int cIndex = 0; cIndex < 10; cIndex++) {
-				cell = row.getCell(cIndex);
-				if(cell != null) {
-						dim.setXStartPosition(rIndex);
-						dim.setYSrartPosition(cIndex);
-						lable = true;
-						break;
+			if(row != null) {
+				if ((row.getLastCellNum() - row.getFirstCellNum()) > 1) {
+					for(int cIndex = 0; cIndex < 50; cIndex++) {
+						cell = row.getCell(cIndex);
+						if(cell != null){
+							if(cell.getCellStyle().getBorderLeft() == 2) {
+								index[0] = cIndex; //left index
+							}
+							if (cell.getCellStyle().getBorderTop() == 2) {
+								index[2] = rIndex; // top index
+							}
+							if(cell.getCellStyle().getBorderRight() == 2) {
+								index[1] = cIndex; // right index
+							}
+							if (cell.getCellStyle().getBorderBottom() == 2) {
+								index[3] = rIndex; //bottom index
+							}
+						}
+					}
 				}
 			}
-			if(lable) {
-				break;
-			}
 		}
-		row = null;
-		cell = null;
-		
-		row = sheet.getRow(dim.getYStartPosition());
-		for(int cIndex = dim.getXStartPosition(); cIndex < 50; cIndex++) {
-			cell = row.getCell(cIndex);
-			if(cell != null) {
-				rLength++;
-			} else {
-				break;
-			}
-		}
-		row = null;
-		cell = null;
-		
-		for(int rIndex = dim.getYStartPosition(); rIndex < 50; rIndex++) {
-			row = sheet.getRow(rIndex);
-			cell = row.getCell(dim.getXStartPosition());
-			if(cell != null) {
-				cLength++;
-			} else {
-				break;
-			}
-		}
-		dim.setXDimention(rLength);
-		dim.setYDimention(cLength);
+		dim.setXStartPosition(index[0]);
+		dim.setYSrartPosition(index[2]);
+		dim.setXDimention(index[1] - index[0] + 1);
+		dim.setYDimention(index[3] - index[2] + 1);
+
 		return dim;
 	}
 		
@@ -156,11 +144,14 @@ public class ScanwordExcelFileDao implements ScanwordDao{
 			String sheetName = sheet.getSheetName();
 			
 			Dimention dim = getDimention(sheet);
-			mCells = new Cell[dim.getXDimention()][dim.getYDimention()];
+			mCells = new Cell[dim.getYDimention()][dim.getXDimention()];
+			Cell mCell = null;
 			if(dim.getXDimention() == 15 && dim.getYDimention() ==30) {
 				DateFormat format = new SimpleDateFormat("dd/mm/yyy HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
-				scanword = new ShortMozaicScanword(sheetName, format.format(cal.getTime()));
+				Date date = cal.getTime();
+				String time = format.format(date);
+				scanword = new ShortMozaicScanword(sheetName, time);
 			}
 			
 			XSSFColor whiteColor = null, blackColor = null, greenColor = null;
@@ -174,33 +165,37 @@ public class ScanwordExcelFileDao implements ScanwordDao{
 			whiteColorByte = whiteColor.getRgb();
 			blackColorByte = blackColor.getRgb();
 			
-			for(int rowIndex = dim.getYStartPosition(); rowIndex < dim.getYDimention(); rowIndex++) {
+			for(int rowIndex = dim.getYStartPosition(); rowIndex < dim.getYDimention() + dim.getYStartPosition(); rowIndex++) {
 				XSSFRow row = sheet.getRow(rowIndex);
-				for(int cellIndex = dim.getXStartPosition(); cellIndex < dim.getXDimention();cellIndex++) {
+				for(int cellIndex = dim.getXStartPosition(); cellIndex < dim.getXDimention() + dim.getXStartPosition();cellIndex++) {
+					mCell = new Cell();
 					XSSFCell cell = row.getCell(cellIndex);
 					if(cell != null) {
 						XSSFColor color = cell.getCellStyle().getFillForegroundXSSFColor();
 						if(color!=null) {
 							byte [] colorByte = color.getRgb();
 							if(this.equal(colorByte, whiteColorByte)) {
-								mCells[cellIndex][rowIndex].setEditable(true);
+								mCell.setEditable(true);
 								if(cell.getStringCellValue().equals("")) {
-									mCells[cellIndex][rowIndex].setText("");
+									mCell.setText("");
 								}
 								else {
-									mCells[cellIndex][rowIndex].setText(cell.getStringCellValue());
+									mCell.setText(cell.getStringCellValue());
 								}
 							}
 							if(this.equal(colorByte, blackColorByte)) {
-								mCells[cellIndex][rowIndex].setComment(true);
-								mCells[cellIndex][rowIndex].setEditable(false);
+								mCell.setComment(true);
+								mCell.setEditable(false);
+								mCell.setText(" ");
 							}
 							if(!this.equal(colorByte, whiteColorByte) && !this.equal(colorByte, blackColorByte)) {
-								mCells[cellIndex][rowIndex].setComment(false);
-								mCells[cellIndex][rowIndex].setEditable(false);
+								mCell.setComment(false);
+								mCell.setEditable(false);
+								mCell.setText(" ");
 							}
 						}
 					}
+					mCells[rowIndex-dim.getYStartPosition()][cellIndex-dim.getXStartPosition()] = mCell;
 				}
 			}
 			scanword.setArray(mCells);

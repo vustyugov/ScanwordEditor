@@ -62,7 +62,7 @@ public abstract class SquaredScanword implements Scanword{
 				return cell.getText();
 			}
 		} else {
-			return "";
+			return " ";
 		}
 	}
 	private String getLine() {
@@ -71,9 +71,16 @@ public abstract class SquaredScanword implements Scanword{
 		for(int rIndex = 0; rIndex < rowCount; rIndex++) {
 			for(int cIndex = 0; cIndex < columnCount; cIndex++) {
 				line.append(getSymbol(array[rIndex][cIndex]));
+			}
+			line.append(" ");
+		}
+		for(int rIndex = 0; rIndex < columnCount; rIndex++) {
+			for(int cIndex = 0; cIndex < rowCount; cIndex++) {
 				vLine.append(getSymbol(array[cIndex][rIndex]));
 			}
+			vLine.append(" ");
 		}
+
 		line.append(" ");
 		line.append(vLine.toString());
 		return line.toString();		
@@ -82,9 +89,12 @@ public abstract class SquaredScanword implements Scanword{
 		List<String> wordList = new LinkedList<String>();
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(line);
-		scanner.useDelimiter("1");
+		scanner.useDelimiter(" ");
 		while (scanner.hasNext()) {
-			wordList.add(scanner.next());
+			String word = scanner.next();
+			if(word.length() > 1 ) {
+				wordList.add(word);
+			}
 		}
 		return wordList;
 	}

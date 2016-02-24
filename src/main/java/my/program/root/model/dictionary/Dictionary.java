@@ -73,9 +73,9 @@ public class Dictionary {
 	}
 	
 	public List<String> getCathegories() {
-		List<String> list = new ArrayList<String>(cathList.size());
-		for(int index = 0; index < list.size(); index++) {
-			list.set(index, cathList.get(index).getValue());
+		List<String> list = new LinkedList<String>();
+		for(int index = 0; index < cathList.size(); index++) {
+			list.add(cathList.get(index).getValue());
 		}
 		return list;
 	}
@@ -92,6 +92,28 @@ public class Dictionary {
 		}
 	}
 	
+	public List<Word> getWords() {
+		return wordsList;
+	}
+	
+	public List<String> getWordsValue() {
+		List<String> list = new ArrayList<String>(wordsList.size());
+		for(int index = 0; index < wordsList.size(); index++) {
+			list.add(index, wordsList.get(index).getValue());
+		}
+		return list;
+	}
+	
+	public List<String> getErrorWordsValue() {
+		List<String> list = new LinkedList<String>();
+		for(Word word: wordsList) {
+			if(word.containsCath("запрещенные")) {
+				list.add(word.getValue());
+			}
+		}
+		return list;
+	}
+	
 	public boolean containsWord(String wordValue) {
 		return map.get(wordValue.length()).containsKey(wordValue);
 	}
@@ -101,7 +123,7 @@ public class Dictionary {
 		map.get(wordValue.length()).remove(wordValue);
 	}
 	
-	private List<String> getWordsByCathegory(String cathegoryName) {
+	public List<String> getWordsByCathegory(String cathegoryName) {
 		List<String> list = new LinkedList<String>();
 		for(Word word: wordsList) {
 			if(word.containsCath(cathegoryName)) {
@@ -119,6 +141,6 @@ public class Dictionary {
 	 * @return
 	 */
 	public List<String> findWordsByTemplateAndCathegory(String template, String cathegoryName) {
-		return ScanwordUtil.findWordsByTemplate(getWordsByCathegory(cathegoryName), template);
+		return ScanwordUtil.findWordsByTemplateAndCathegory(this, getWordsValue(), template, cathegoryName);
 	}
 }
