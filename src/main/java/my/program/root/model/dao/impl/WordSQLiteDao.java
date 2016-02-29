@@ -23,17 +23,18 @@ public class WordSQLiteDao implements WordDao{
 	    ObjectOutputStream oos = null;
 	    
 	    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	    byte[] data = null;
 	    try {
 			oos = new ObjectOutputStream(bos);
 			oos.writeObject(word.getDesc());
 			oos.flush();
 			oos.close();
+			data = bos.toByteArray();
 			bos.close();
 	    } catch (IOException e) {
 			e.printStackTrace();
 		}
 		    
-		byte[] data = bos.toByteArray();
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setObject(1, word.getId());

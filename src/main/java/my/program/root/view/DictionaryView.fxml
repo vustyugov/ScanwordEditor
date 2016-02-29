@@ -18,12 +18,20 @@
                      <children>
                         <HBox spacing="10.0">
                            <children>
-                              <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="126.0" promptText="" visibleRowCount="5">
+                              <ComboBox fx:id="comboBox" prefHeight="25.0" prefWidth="82.0" promptText="" visibleRowCount="5">
                                  <VBox.margin>
                                     <Insets left="10.0" right="10.0" top="10.0" />
                                  </VBox.margin>
                               </ComboBox>
-                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadHandle" text="Load" />
+                              <Button fx:id="loadButton" mnemonicParsing="false" onAction="#handleLoad" text="Load">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font></Button>
+                              <Button fx:id="showButton" mnemonicParsing="false" onAction="#handleShow" text="Show">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
                            </children>
                            <VBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -45,7 +53,7 @@
                <children>
                   <Accordion>
                     <panes>
-                      <TitledPane animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" prefWidth="202.0" text="unused">
+                      <TitledPane fx:id="unusedTitledPane" animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" prefWidth="202.0" text="unused">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -54,7 +62,7 @@
                               </AnchorPane>
                         </content>
                       </TitledPane>
-                      <TitledPane animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" text="used">
+                      <TitledPane fx:id="usedTitledPane" animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" text="used">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
@@ -63,7 +71,7 @@
                               </AnchorPane>
                         </content>
                       </TitledPane>
-                      <TitledPane animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" text="incorrect">
+                      <TitledPane fx:id="incorrectTitledPane" animated="false" maxHeight="457.0" minHeight="457.0" prefHeight="457.0" text="incorrect">
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>

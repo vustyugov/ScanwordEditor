@@ -1,7 +1,6 @@
 package my.program.root.model.dao.impl;
 
 import java.io.*;
-import java.sql.Connection;
 import java.text.*;
 import java.util.*;
 

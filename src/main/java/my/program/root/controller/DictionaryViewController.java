@@ -29,6 +29,15 @@ public class DictionaryViewController {
 	@FXML
 	private ListView<String> incorrectListView;
 		
+	@FXML
+	private TitledPane unusedTitledPane;
+	
+	@FXML
+	private TitledPane usedTitledPane;
+	
+	@FXML
+	private TitledPane incorrectTitledPane;
+	
 	private List<String> cathegories;
 	private Dictionary dic;
 	private Block block;
@@ -59,7 +68,9 @@ public class DictionaryViewController {
 
 				unusedListView.getItems().addAll(
 						FXCollections.observableList(unusedList));
-
+				if(unusedList.size() > 0) {
+					unusedTitledPane.setExpanded(true);
+				}
 				usedListView.getItems().addAll(
 						FXCollections.observableList(usedList));
 				
@@ -72,7 +83,12 @@ public class DictionaryViewController {
 	}
 	
 	@FXML
-	private void loadHandle() {
+	private void handleShow() {
+		app.showScanwordsWordListOverview();
+	}
+	
+	@FXML
+	private void handleLoad() {
 		FileChooser fChooser = new FileChooser();
 		fChooser.setTitle("Select files");
 		fChooser.getExtensionFilters().addAll(new ExtensionFilter("Excel files","*.xlsx"));
