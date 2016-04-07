@@ -1,20 +1,13 @@
 package my.program.root.controller;
 
-import java.util.List;
-import java.util.Observable;
-
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.*;
+import javafx.collections.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import my.program.root.ScanwordEditorApp;
-import my.program.root.model.dictionary.Dictionary;
 
 public class ScanwordsWordListOverviewController {
 	private class WordView {
@@ -78,7 +71,7 @@ public class ScanwordsWordListOverviewController {
 			return repeat;
 		}
 	}
-
+	
 	@FXML
 	private AnchorPane wordListView;
 	
@@ -114,6 +107,11 @@ public class ScanwordsWordListOverviewController {
 	
 	public void setMainApp(ScanwordEditorApp mainApp) {
 		this.mainApp = mainApp;
+		ObservableList<WordView> list = FXCollections.observableArrayList();
+		for(String[] element: mainApp.getBlockWordList()) {
+			list.add(new WordView(element[0],element[1], element[2], element[3]));
+		}
+		wordsTable.setItems(list);
 	}
 	
 	@FXML

@@ -6,9 +6,9 @@ import java.util.*;
 import my.program.root.model.dictionary.Cathegory;
 
 public interface CathegoryDao {
-	public final static String readByWordId = "select c.id, c.value, c.description from cathegories c, words_cathegories wc, words w "
-			+ "									where wc.cathegory_id = c.id and wc.word_id = w.id and w.value = ";
-	public final static String readAllCathegories = "select * from cathegories;";
+	public final static String readByWordId = "select c.id, c.value, c.description from categories c, link_wc wc, words w "
+			+ "									where wc.category_id = c.id and wc.word_id = w.id and w.value = ";
+	public final static String readAllCathegories = "select * from categories;";
 	
 	public void getConnection (Connection conn);
 	public void create(Cathegory cath);

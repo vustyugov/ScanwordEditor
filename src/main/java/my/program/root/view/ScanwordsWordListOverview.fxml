@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="wordListView" minHeight="401.0" minWidth="360.0" onKeyPressed="#handleUpdate" prefHeight="400.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="my.program.root.controller.ScanwordsWordListOverviewController">
+<AnchorPane fx:id="wordListView" minHeight="600.0" minWidth="360.0" onKeyPressed="#handleUpdate" prefHeight="600.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="my.program.root.controller.ScanwordsWordListOverviewController">
    <children>
-      <TableView fx:id="wordsTable" layoutX="200.0" layoutY="100.0" prefHeight="360.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TableView fx:id="wordsTable" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columns>
           <TableColumn fx:id="wordTableColumn" prefWidth="140.0" text="Word" />
           <TableColumn fx:id="scanwordTableColumn" text="scanword" />

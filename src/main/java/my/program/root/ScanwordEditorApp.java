@@ -2,8 +2,10 @@ package my.program.root;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -73,25 +75,18 @@ public class ScanwordEditorApp extends Application {
 	}
 	
 	private List<String> getRepeatedWords(List<String> list) {
-		List<String> result = new LinkedList<String> ();
-		for(String element: list) {
-			List<String> tmp = new ArrayList<String>(list); 
-			while(tmp.size() > 2) {
-				if(tmp.subList(0, (tmp.size()/2)-1).contains(element) && tmp.subList(tmp.size()/2, tmp.size()-1).contains(element)) {
-					if(!result.contains(element)) {
-						result.add(element);
-					}
-				} else {
-					if (tmp.subList(0, (tmp.size()/2)-1).contains(element)) {
-						tmp = tmp.subList(0, (tmp.size()/2)-1);
-					} else {
-						tmp = tmp.subList(tmp.size()/2, tmp.size()-1);
-					}
+		Set<String> result = new HashSet<String> ();
+		List<String> tmp = new ArrayList<String>(list);
+		for(int index = 0; index < tmp.size(); index++) {
+			for(int nIndex = index+1; nIndex < tmp.size(); nIndex++) {
+				if(list.get(index).equals(list.get(nIndex))) {
+					result.add(list.get(index));
+					break;
 				}
 			}
-			
 		}
-		return result;
+			
+		return new LinkedList<String>(result);
 	}
 	
 	public List<String[]> getBlockWordList() {
@@ -125,11 +120,10 @@ public class ScanwordEditorApp extends Application {
 			loader.setLocation(ScanwordEditorApp.class.getResource("view/ScanwordsWordListOverview.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
 			
-			
 			Stage listStage = new Stage();
 			listStage.setTitle("Words");
-			listStage.initModality(Modality.WINDOW_MODAL);
-			listStage.initOwner(primaryStage);
+//			listStage.initModality(Modality.WINDOW_MODAL);
+//			listStage.initOwner(primaryStage);
 			
 			Scene scene = new Scene(page);
 			listStage.setScene(scene);
